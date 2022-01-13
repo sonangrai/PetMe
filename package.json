@@ -1,0 +1,32 @@
+{
+  "name": "petme",
+  "version": "1.0.0",
+  "description": "A pet social site and also an ecommerce for cuties.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node dist",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server:dev": "nodemon --watch .env --watch src --exec babel-node src --source-maps",
+    "build": "rimraf dist && babel src --copy-files --out-dir dist"
+  },
+  "keywords": [
+    "pet"
+  ],
+  "author": "sonahang rai",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^11.0.0",
+    "express": "^4.17.2",
+    "mongoose": "^6.1.6",
+    "socket.io": "^4.4.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.16.8",
+    "@babel/core": "^7.16.7",
+    "@babel/node": "^7.16.8",
+    "@babel/preset-env": "^7.16.8",
+    "nodemon": "^2.0.15",
+    "rimraf": "^3.0.2"
+  }
+}
