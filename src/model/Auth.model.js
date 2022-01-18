@@ -10,9 +10,17 @@ const AuthSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    username: {
+      type: String,
+      required: true,
+    },
     password: {
       type: String,
       required: true,
+    },
+    status: {
+      type: String,
+      default: 0, // 0 = Unactivated (Default), 1 = Activated, 2 = Paused
     },
   },
   { timestamps: true }
