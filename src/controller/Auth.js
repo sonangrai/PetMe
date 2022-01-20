@@ -10,7 +10,9 @@ import bcrypt from "bcryptjs";
 export const RegisterTask = async (req, res) => {
   let errors = validationResult(req);
 
-  //If error exist
+  /*
+   * If error exist
+   */
   if (!errors.isEmpty()) {
     //Creating response
     let resData = new ResponseObj(
@@ -21,16 +23,38 @@ export const RegisterTask = async (req, res) => {
     return res.send(resData);
   }
 
-  //Creating the new user object with the body request
+  /**
+   * Creating the new user object with the body request
+   */
   let newUser = new Auth();
   newUser.email = req.body.email;
   newUser.username = req.body.username;
 
-  //Generating salt
+  /**
+   * Generating salt
+   */
   let salt = await bcrypt.genSalt(10);
   //Hashing the password
   newUser.password = await bcrypt.hash(req.body.password, salt);
 
-  let resData = new ResponseObj(200, newUser, "User saved");
-  return res.send(resData);
+  /**
+   * Checking if the email is already existing
+   */
+  let found = await Auth.findOne({ email: req.body.email });
+  if (found) {
+    let resData = new ResponseObj(409, newUser, "Email already Taken");
+    return res.send(resData);
+  }
+
+  /**
+   * Saving to database
+   */
+  try {
+    await newUser.save();
+    let resData = new ResponseObj(200, newUser, "User saved");
+    return res.send(resData);
+  } catch (error) {
+    let resData = new ResponseObj(400, error, "User save failed");
+    return res.send(resData);
+  }
 };
