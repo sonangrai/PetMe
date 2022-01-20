@@ -9,6 +9,9 @@ require("dotenv").config(); //The dotenv for env usage
  */
 let app = express();
 
+//Validating json usage
+app.use(express.json({ extended: false }));
+
 /**
  * Creating an http server
  */
