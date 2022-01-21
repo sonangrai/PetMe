@@ -24,6 +24,15 @@ export const RegisterTask = async (req, res) => {
   }
 
   /**
+   * Checking if the email is already existing
+   */
+  let found = await Auth.findOne({ email: req.body.email });
+  if (found) {
+    let resData = new ResponseObj(409, {}, "Email already Taken");
+    return res.send(resData);
+  }
+
+  /**
    * Creating the new user object with the body request
    */
   let newUser = new Auth();
@@ -36,15 +45,6 @@ export const RegisterTask = async (req, res) => {
   let salt = await bcrypt.genSalt(10);
   //Hashing the password
   newUser.password = await bcrypt.hash(req.body.password, salt);
-
-  /**
-   * Checking if the email is already existing
-   */
-  let found = await Auth.findOne({ email: req.body.email });
-  if (found) {
-    let resData = new ResponseObj(409, newUser, "Email already Taken");
-    return res.send(resData);
-  }
 
   /**
    * Saving to database
