@@ -1,29 +1,17 @@
 import Auth from "../model/Auth.model";
-import { validationResult } from "express-validator";
 import ResponseObj from "./Response";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
+import requestValidation from "./ValidationError";
 
 /**
  * This task is for registering a new user
  * @returns
  */
 export const RegisterTask = async (req, res) => {
-  let errors = validationResult(req);
-
-  /*
-   * If error exist
-   */
-  if (!errors.isEmpty()) {
-    //Creating response
-    let resData = new ResponseObj(
-      400,
-      errors.errors,
-      "Validation errors occured"
-    );
-    return res.send(resData);
-  }
+  //Checking validations
+  requestValidation(req, res);
 
   /**
    * Checking if the email is already existing
@@ -95,4 +83,12 @@ export const SendActivationMail = async (id, token, email) => {
     html: `<p>CLick here to change your password <a href="/api/resetpassword/${id}/${token}">Reset password</a> </p>`, // html body
   });
   console.log("Message sent: %s", info.messageId);
+};
+
+/**
+ * The login task
+ */
+export const LoginTask = async (req, res) => {
+  //Checking validations
+  requestValidation(req, res);
 };
