@@ -28,6 +28,15 @@ export const CreateProfileTask = async (req, res) => {
       address: address,
       contact: contact,
     });
-    res.send(newprofile);
-  } catch (error) {}
+    await newprofile.save();
+    let respObject = new ResponseObj(
+      400,
+      newprofile,
+      "Profile added successfully"
+    );
+    res.send(respObject);
+  } catch (error) {
+    let resData = new ResponseObj(400, error, "Profile save failed");
+    return res.send(resData);
+  }
 };
