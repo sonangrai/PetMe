@@ -8,7 +8,12 @@ const Global = createGlobalStyle`
 
 body{
     font-family: 'Quicksand', sans-serif;
-    font-size: 18px
+    font-size: 18px;
+    margin:0;
+}
+
+*{
+    box-sizing: border-box;
 }
 
 `;
