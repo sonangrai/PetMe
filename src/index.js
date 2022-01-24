@@ -3,6 +3,7 @@ import http from "http";
 import { Server } from "socket.io";
 import connectDb from "./db/Dbconnect";
 import routes from "./routes";
+import cors from "cors";
 require("dotenv").config(); //The dotenv for env usage
 
 /**
@@ -12,6 +13,9 @@ let app = express();
 
 //Validating json usage
 app.use(express.json({ extended: false }));
+
+//Disabling cors
+app.use(cors());
 
 /**
  * Creating an http server
