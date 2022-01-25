@@ -112,8 +112,12 @@ export const LoginTask = async (req, res) => {
       (await Auth.findOne({ username: logtype })) ||
       (await Auth.findOne({ email: logtype }));
     if (!findUser) {
-      let responseObj = new ResponseObj(401, {}, "User not found");
-      return res.status(401).send(responseObj);
+      let responseObj = new ResponseObj(
+        404,
+        {},
+        "Sorry, The user was not found. Please chefck again."
+      );
+      return res.status(404).send(responseObj);
     }
 
     //Checking if the account is activated
@@ -129,8 +133,12 @@ export const LoginTask = async (req, res) => {
     //Finally checking the password
     const isMatch = await bcrypt.compare(password, findUser.password);
     if (!isMatch) {
-      let responsObj = new ResponseObj(401, {}, "Password did not matched");
-      res.status(401).send(responsObj);
+      let responsObj = new ResponseObj(
+        401,
+        {},
+        "Sorry, Password did not matched. Please try again."
+      );
+      return res.status(401).send(responsObj);
     }
 
     let access_token = jwt.sign(
@@ -144,8 +152,8 @@ export const LoginTask = async (req, res) => {
       user: findUser,
     };
 
-    let respObject = new ResponseObj(400, resData, "Login Successfull");
-    return res.status(400).send(respObject);
+    let respObject = new ResponseObj(200, resData, "Login Successfull");
+    return res.status(200).send(respObject);
   } catch (error) {
     let responseObj = new ResponseObj(500, error, "Server Error");
     return res.status(500).send(responseObj);
