@@ -28,7 +28,7 @@ export const RegisterTask = async (req, res) => {
   let found = await Auth.findOne({ email });
   if (found) {
     let resData = new ResponseObj(409, {}, "Email already Taken");
-    return res.send(resData);
+    return res.status(409).send(resData);
   }
 
   /**
@@ -86,6 +86,54 @@ export const SendActivationMail = async (id, token, email) => {
     html: `<p>CLick here to change your password <a href="/api/resetpassword/${id}/${token}">Reset password</a> </p>`, // html body
   });
   console.log("Message sent: %s", info.messageId);
+};
+
+/**
+ * The activate account task
+ */
+export const ActivateTask = async (req, res) => {
+  const { email, code } = req.body;
+
+  //Checking code for now 1234
+  if (code !== "1234") {
+    let respObject = new ResponseObj(
+      401,
+      {},
+      "Sorry, but the code is not valid"
+    );
+    return res.status(401).send(respObject);
+  }
+
+  /**
+   * Finding the user
+   */
+  try {
+    let findUser = await Auth.findOne({ email: email });
+    if (!findUser) {
+      let responseObj = new ResponseObj(
+        404,
+        {},
+        "Sorry, The user was not found. Please chefck again."
+      );
+      return res.status(404).send(responseObj);
+    }
+
+    await Auth.findOneAndUpdate(
+      { _id: findUser._id },
+      { status: 1 },
+      { new: true }
+    );
+
+    let respObject = new ResponseObj(
+      200,
+      {},
+      "Congrats, your account is now activated. Now you can log in."
+    );
+    return res.status(200).send(respObject);
+  } catch (error) {
+    let responseObj = new ResponseObj(500, error, "Server Error");
+    return res.status(500).send(responseObj);
+  }
 };
 
 /**
