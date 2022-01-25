@@ -147,11 +147,18 @@ export const LoginTask = async (req, res) => {
       { expiresIn: 360000 }
     );
 
+    //Object for sending data to response
+    let userData = {
+      _id: findUser._id,
+      email: findUser.email,
+      username: findUser.username,
+      status: findUser.status,
+      createdAt: findUser.createdAt,
+    };
     let resData = {
       access_token: access_token,
-      user: findUser,
+      user: userData,
     };
-
     let respObject = new ResponseObj(200, resData, "Login Successfull");
     return res.status(200).send(respObject);
   } catch (error) {
