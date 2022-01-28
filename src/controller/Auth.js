@@ -163,7 +163,7 @@ export const LoginTask = async (req, res) => {
       let responseObj = new ResponseObj(
         404,
         {},
-        "Sorry, The user was not found. Please chefck again."
+        "Sorry, The user was not found. Please check again."
       );
       return res.status(404).send(responseObj);
     }
