@@ -40,3 +40,18 @@ export const CreateProfileTask = async (req, res) => {
     return res.send(resData);
   }
 };
+
+/**
+ * Fetch the profile
+ */
+export const GetProfile = async (req, res) => {
+  //finding if profile exist
+  let profile = await Profile.findOne({ authId: req.user.id });
+  if (!profile) {
+    let respObject = new ResponseObj(404, {}, "Profile not found");
+    return res.status(404).send(respObject);
+  }
+
+  let respObject = new ResponseObj(200, profile, "Profile found");
+  return res.status(200).send(respObject);
+};

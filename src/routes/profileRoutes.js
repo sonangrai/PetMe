@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { check } from "express-validator";
-import { CreateProfileTask } from "../controller/Profile";
+import { CreateProfileTask, GetProfile } from "../controller/Profile";
 import auth from "../middleware/auth";
 
 let router = Router();
@@ -31,5 +31,10 @@ router.post(
   auth,
   CreateProfileTask
 );
+
+/**
+ * Get profile
+ */
+router.get("/", auth, GetProfile);
 
 export default router;
