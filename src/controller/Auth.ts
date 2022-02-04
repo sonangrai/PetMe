@@ -4,21 +4,20 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import { validationResult } from "express-validator";
+import { Request, Response } from "express";
+import dotenv from "dotenv";
+dotenv.config();
 
 /**
  * This task is for registering a new user
  * @returns
  */
-export const RegisterTask = async (req, res) => {
+export const RegisterTask = async (req: Request, res: Response) => {
   let { email, username, password } = req.body;
   //Checking validations
   let errors = validationResult(req);
   if (!errors.isEmpty()) {
-    let respObject = new ResponseObj(
-      400,
-      errors.errors,
-      "Validations error occured"
-    );
+    let respObject = new ResponseObj(400, errors, "Validations error occured");
     return res.status(400).send(respObject);
   }
 
@@ -48,7 +47,7 @@ export const RegisterTask = async (req, res) => {
   /**
    * Generating token for the activation link
    */
-  let token = jwt.sign({ expiresIn: 360000 }, process.env.mySecret);
+  let token = jwt.sign({ expiresIn: 360000 }, process.env.mySecret!);
 
   /**
    * Saving to database
@@ -59,7 +58,10 @@ export const RegisterTask = async (req, res) => {
     //SendActivationMail(newUser._id, token, newUser.email);
     return res.send(resData);
   } catch (error) {
-    let resData = new ResponseObj(400, error, "User save failed");
+    let errorObject: object = {};
+    if (error instanceof Error) errorObject = error;
+    let resData = new ResponseObj(400, errorObject, "User save failed");
+
     return res.send(resData);
   }
 };
@@ -67,9 +69,11 @@ export const RegisterTask = async (req, res) => {
 /**
  * Create activate token and save to mongodb
  */
-export const SendActivationMail = async (id, token, email) => {
-  console.log(email, token, id);
-
+export const SendActivationMail = async (
+  id: string,
+  token: string,
+  email: string
+) => {
   let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     auth: {
@@ -85,13 +89,13 @@ export const SendActivationMail = async (id, token, email) => {
     text: "Forgot Your Password", // plain text body
     html: `<p>CLick here to change your password <a href="/api/resetpassword/${id}/${token}">Reset password</a> </p>`, // html body
   });
-  console.log("Message sent: %s", info.messageId);
+  //console.log("Message sent: %s", info.messageId);
 };
 
 /**
  * The activate account task
  */
-export const ActivateTask = async (req, res) => {
+export const ActivateTask = async (req: Request, res: Response) => {
   const { email, code } = req.body;
 
   //Checking code for now 1234
@@ -131,7 +135,9 @@ export const ActivateTask = async (req, res) => {
     );
     return res.status(200).send(respObject);
   } catch (error) {
-    let responseObj = new ResponseObj(500, error, "Server Error");
+    let errorObject: object = {};
+    if (error instanceof Error) errorObject = error;
+    let responseObj = new ResponseObj(500, errorObject, "Server Error");
     return res.status(500).send(responseObj);
   }
 };
@@ -139,16 +145,12 @@ export const ActivateTask = async (req, res) => {
 /**
  * The login task
  */
-export const LoginTask = async (req, res) => {
+export const LoginTask = async (req: Request, res: Response) => {
   const { logtype, password } = req.body;
   //Checking validations
   let errors = validationResult(req);
   if (!errors.isEmpty()) {
-    let respObject = new ResponseObj(
-      400,
-      errors.errors,
-      "Validations error occured"
-    );
+    let respObject = new ResponseObj(400, errors, "Validations error occured");
     return res.status(400).send(respObject);
   }
 
@@ -191,7 +193,7 @@ export const LoginTask = async (req, res) => {
 
     let access_token = jwt.sign(
       { user: { id: findUser._id } },
-      process.env.mySecret,
+      process.env.mySecret!,
       { expiresIn: 360000 }
     );
 
@@ -210,7 +212,9 @@ export const LoginTask = async (req, res) => {
     let respObject = new ResponseObj(200, resData, "Login Successfull");
     return res.status(200).send(respObject);
   } catch (error) {
-    let responseObj = new ResponseObj(500, error, "Server Error");
+    let errorObject: object = {};
+    if (error instanceof Error) errorObject = error;
+    let responseObj = new ResponseObj(500, errorObject, "Server Error");
     return res.status(500).send(responseObj);
   }
 };

@@ -5,7 +5,11 @@
  *  status = the response status
  */
 class ResponseObj {
-  constructor(status, data, msg) {
+  status: number;
+  data: object;
+  msg: string;
+
+  constructor(status: number, data: object, msg: string) {
     this.status = status;
     this.data = data;
     this.msg = msg;

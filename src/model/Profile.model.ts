@@ -30,7 +30,7 @@ const ProfileSchema = new mongoose.Schema(
       default: 0, // 0 for hide & 1 for show
     },
   },
-  { timestamp: true }
+  { timestamps: true }
 );
 
 export default mongoose.model("Profile", ProfileSchema);

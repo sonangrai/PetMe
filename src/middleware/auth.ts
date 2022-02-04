@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
 import ResponseObj from "../controller/Response";
-require("dotenv").config();
+import { NextFunction, Request, Response } from "express";
+import dotenv from "dotenv";
+dotenv.config();
 
 /**
  *
@@ -10,7 +12,7 @@ require("dotenv").config();
  * @returns Authenticated users or not
  */
 
-const auth = async (req, res, next) => {
+const auth = async (req: Request, res: Response, next: NextFunction) => {
   // Get token from header
   const token = req.header("x-auth-token");
 
@@ -22,19 +24,23 @@ const auth = async (req, res, next) => {
 
   // Verify token
   try {
-    await jwt.verify(token, process.env.mySecret, (error, decoded) => {
-      if (error) {
-        let respObject = new ResponseObj(
-          401,
-          {},
-          "Token is not valid or is expired"
-        );
-        return res.status(401).send(respObject);
-      } else {
-        req.user = decoded.user;
-        next();
+    await jwt.verify(
+      token,
+      process.env.mySecret!,
+      (error: any, decoded: any) => {
+        if (error) {
+          let respObject = new ResponseObj(
+            401,
+            {},
+            "Token is not valid or is expired"
+          );
+          return res.status(401).send(respObject);
+        } else {
+          req.user = decoded.user;
+          next();
+        }
       }
-    });
+    );
   } catch (err) {
     let respObject = new ResponseObj(500, {}, "Server Error");
     return res.status(500).send(respObject);

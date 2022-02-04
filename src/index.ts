@@ -1,4 +1,5 @@
 import express from "express"; //Importing the express
+import path from "path/posix";
 import http from "http";
 import { Server } from "socket.io";
 import connectDb from "./db/Dbconnect";
@@ -12,10 +13,19 @@ require("dotenv").config(); //The dotenv for env usage
 let app = express();
 
 //Validating json usage
-app.use(express.json({ extended: false }));
+app.use(express.json());
 
 //Disabling cors
 app.use(cors());
+
+//User
+declare global {
+  namespace Express {
+    export interface Request {
+      user?: any;
+    }
+  }
+}
 
 /**
  * Creating an http server

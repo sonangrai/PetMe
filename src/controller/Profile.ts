@@ -2,24 +2,19 @@ import Profile from "../model/Profile.model";
 import Auth from "../model/Auth.model";
 import { validationResult } from "express-validator";
 import ResponseObj from "./Response";
+import { Response, Request } from "express";
 
 /**
  * Creates a profile
  */
-export const CreateProfileTask = async (req, res) => {
+export const CreateProfileTask = async (req: Request, res: Response) => {
   let { firstname, lastname, avatar, address, contact } = req.body;
-
   //Checking the validetion error
   let errors = validationResult(req);
   if (!errors.isEmpty()) {
-    let respObject = new ResponseObj(
-      400,
-      errors.errors,
-      "Validation error occured"
-    );
+    let respObject = new ResponseObj(400, errors, "Validation error occured");
     return res.status(400).send(respObject);
   }
-
   try {
     let newprofile = new Profile({
       authId: req.user.id,
@@ -37,7 +32,9 @@ export const CreateProfileTask = async (req, res) => {
     );
     res.send(respObject);
   } catch (error) {
-    let resData = new ResponseObj(400, error, "Profile save failed");
+    let errorObject: object = {};
+    if (error instanceof Error) errorObject = error;
+    let resData = new ResponseObj(400, errorObject, "Profile save failed");
     return res.send(resData);
   }
 };
@@ -45,20 +42,14 @@ export const CreateProfileTask = async (req, res) => {
 /**
  * Edit a profile
  */
-export const EditProfileTask = async (req, res) => {
+export const EditProfileTask = async (req: Request, res: Response) => {
   let { firstname, lastname, avatar, address, contact } = req.body;
-
   //Checking the validetion error
   let errors = validationResult(req);
   if (!errors.isEmpty()) {
-    let respObject = new ResponseObj(
-      400,
-      errors.errors,
-      "Validation error occured"
-    );
+    let respObject = new ResponseObj(400, errors, "Validation error occured");
     return res.status(400).send(respObject);
   }
-
   let profile = new Profile({
     firstname,
     lastname,
@@ -66,19 +57,17 @@ export const EditProfileTask = async (req, res) => {
     address,
     contact,
   });
-
   //New pbject for updated fields
-  let newProfile = {};
+  let newProfile = profile;
   if (firstname) newProfile.firstname = firstname;
   if (lastname) newProfile.lastname = lastname;
   if (avatar) newProfile.avatar = avatar;
   if (address) newProfile.address = address;
   if (contact) newProfile.contact = contact;
-
   try {
     let findUser = await Auth.findById(req.user.id);
     if (!findUser) {
-      let respObject = new ResponseObj(400, newprofile, "User not found");
+      let respObject = new ResponseObj(400, newProfile, "User not found");
       res.send(respObject);
     } else {
       profile = await Profile.findOneAndUpdate(
@@ -94,7 +83,9 @@ export const EditProfileTask = async (req, res) => {
       return res.status(200).send(respObject);
     }
   } catch (error) {
-    let resData = new ResponseObj(400, error, "Profile Update Error");
+    let errorObject: object = {};
+    if (error instanceof Error) errorObject = error;
+    let resData = new ResponseObj(400, errorObject, "Profile Update Error");
     return res.send(resData);
   }
 };
@@ -102,7 +93,7 @@ export const EditProfileTask = async (req, res) => {
 /**
  * Fetch the profile
  */
-export const GetProfile = async (req, res) => {
+export const GetProfile = async (req: Request, res: Response) => {
   //finding if profile exist
   let profile = await Profile.findOne({ authId: req.user.id });
   if (!profile) {
