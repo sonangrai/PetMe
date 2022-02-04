@@ -15,6 +15,10 @@
   "keywords": [
     "pet"
   ],
+  "engines": {
+    "node": "16.13.0",
+    "npm": "8.1.0"
+  },
   "author": "sonahang rai",
   "license": "MIT",
   "dependencies": {
@@ -34,6 +38,7 @@
     "@types/bcryptjs": "^2.4.2",
     "@types/express": "^4.17.13",
     "@types/jsonwebtoken": "^8.5.8",
+    "@types/mongoose": "^5.11.97",
     "@types/node": "^17.0.14",
     "@types/nodemailer": "^6.4.4",
     "concurrently": "^7.0.0",
