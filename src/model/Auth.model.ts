@@ -3,7 +3,12 @@ import mongoose from "mongoose";
 /**
  * A model for the user authentication
  */
-
+export interface IAuth extends mongoose.Document {
+  email: string;
+  username: string;
+  password: string;
+  status: string;
+}
 const AuthSchema = new mongoose.Schema(
   {
     email: {
@@ -26,4 +31,4 @@ const AuthSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model("Auth", AuthSchema);
+export default mongoose.model<IAuth>("Auth", AuthSchema);

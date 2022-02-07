@@ -4,8 +4,12 @@ import {
   CreateProfileTask,
   EditProfileTask,
   GetProfile,
+  UploadDP,
 } from "../controller/Profile";
 import auth from "../middleware/auth";
+import multipart from "connect-multiparty";
+
+let multipartMiddleware = multipart();
 
 let router = Router();
 
@@ -67,5 +71,10 @@ router.put(
  * Get profile
  */
 router.get("/", auth, GetProfile);
+
+/**
+ * Upload DP
+ */
+router.post("/dp", [auth, multipartMiddleware], UploadDP);
 
 export default router;

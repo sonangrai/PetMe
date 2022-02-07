@@ -3,6 +3,14 @@ import Auth from "../model/Auth.model";
 import { validationResult } from "express-validator";
 import ResponseObj from "./Response";
 import { Response, Request } from "express";
+import cloudinary from "cloudinary";
+
+//Cloudinary config
+cloudinary.v2.config({
+  cloud_name: process.env.cloudName,
+  api_key: process.env.apiKey,
+  api_secret: process.env.apiSecret,
+});
 
 /**
  * Creates a profile
@@ -103,4 +111,55 @@ export const GetProfile = async (req: Request, res: Response) => {
 
   let respObject = new ResponseObj(200, profile, "Profile found");
   return res.status(200).send(respObject);
+};
+
+/**
+ * Upload DP
+ */
+export const UploadDP = async (req: Request, res: Response) => {
+  /**
+   * Finding if there is older dp to delete it
+   */
+  let findOldDp = await Profile.findOne({ authId: req.user.id });
+  if (findOldDp && findOldDp.hasOwnProperty("avatar")) {
+    //delete here
+  } else {
+    //Upload the dp
+    //Getting image
+    const imagedata = req.files.image;
+    //Folder
+    let location: string = "petgram/profile";
+
+    //Uploading to Cloudinary
+    cloudinary.v2.uploader.upload(
+      imagedata.path,
+      {
+        folder: location,
+        use_filename: true,
+      },
+      async (error: any, result: any) => {
+        if (result) {
+          let respObject = new ResponseObj(
+            200,
+            {
+              _id: result.public_id,
+              url: result.url,
+              secure_url: result.secure_url,
+              width: result.width,
+              height: result.height,
+            },
+            "Profile Image upload Success"
+          );
+          return res.status(200).send(respObject);
+        } else {
+          let respObject = new ResponseObj(
+            400,
+            {},
+            "Error Occured while uploading."
+          );
+          return res.status(400).send(respObject);
+        }
+      }
+    );
+  }
 };
