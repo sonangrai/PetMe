@@ -171,7 +171,7 @@ export const LoginTask = async (req: Request, res: Response) => {
     }
 
     //Checking if the account is activated
-    if (findUser.status != 1) {
+    if (findUser.status != "1") {
       let responsObj = new ResponseObj(
         405,
         findUser,
@@ -203,7 +203,6 @@ export const LoginTask = async (req: Request, res: Response) => {
       email: findUser.email,
       username: findUser.username,
       status: findUser.status,
-      createdAt: findUser.createdAt,
     };
     let resData = {
       access_token: access_token,
