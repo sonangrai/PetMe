@@ -7,7 +7,13 @@ export interface IProfile extends mongoose.Document {
   authId: string;
   firstname: string;
   lastname: string;
-  avatar: string;
+  avatar: {
+    _id: string;
+    url: string;
+    secure_url: string;
+    width: number;
+    height: number;
+  };
   bio: string;
   gender: string;
   dob: string;
@@ -29,7 +35,7 @@ const ProfileSchema = new mongoose.Schema(
       type: String,
     },
     avatar: {
-      type: String,
+      type: Object,
     },
     bio: {
       type: String,
