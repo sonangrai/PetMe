@@ -51,19 +51,28 @@ export const CreateProfileTask = async (req: Request, res: Response) => {
  * Edit a profile
  */
 export const EditProfileTask = async (req: Request, res: Response) => {
-  let { firstname, lastname, avatar, address, contact } = req.body;
-  //Checking the validetion error
-  let errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    let respObject = new ResponseObj(400, errors, "Validation error occured");
-    return res.status(400).send(respObject);
-  }
+  let {
+    firstname,
+    lastname,
+    avatar,
+    address,
+    contact,
+    bio,
+    gender,
+    dob,
+    hidenumber,
+  } = req.body;
+
   let profile = new Profile({
     firstname,
     lastname,
     avatar,
     address,
     contact,
+    bio,
+    gender,
+    dob,
+    hidenumber,
   });
   //New pbject for updated fields
   let newProfile = profile;
@@ -72,6 +81,10 @@ export const EditProfileTask = async (req: Request, res: Response) => {
   if (avatar) newProfile.avatar = avatar;
   if (address) newProfile.address = address;
   if (contact) newProfile.contact = contact;
+  if (bio) newProfile.bio = bio;
+  if (gender) newProfile.gender = gender;
+  if (dob) newProfile.dob = dob;
+  if (hidenumber) newProfile.hidenumber = hidenumber;
   try {
     let findUser = await Auth.findById(req.user.id);
     if (!findUser) {

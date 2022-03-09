@@ -194,7 +194,7 @@ export const LoginTask = async (req: Request, res: Response) => {
     let access_token = jwt.sign(
       { user: { id: findUser._id } },
       process.env.mySecret!,
-      { expiresIn: 360000 }
+      { expiresIn: 3600000 }
     );
 
     //Object for sending data to response
