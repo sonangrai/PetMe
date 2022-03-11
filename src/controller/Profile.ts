@@ -1,4 +1,4 @@
-import Profile from "../model/Profile.model";
+import Profile, { IProfile } from "../model/Profile.model";
 import Auth from "../model/Auth.model";
 import { validationResult } from "express-validator";
 import ResponseObj from "./Response";
@@ -63,19 +63,10 @@ export const EditProfileTask = async (req: Request, res: Response) => {
     hidenumber,
   } = req.body;
 
-  let profile = new Profile({
-    firstname,
-    lastname,
-    avatar,
-    address,
-    contact,
-    bio,
-    gender,
-    dob,
-    hidenumber,
-  });
+  let profile = new Profile();
+
   //New pbject for updated fields
-  let newProfile = profile;
+  let newProfile = {} as IProfile;
   if (firstname) newProfile.firstname = firstname;
   if (lastname) newProfile.lastname = lastname;
   if (avatar) newProfile.avatar = avatar;
@@ -92,15 +83,11 @@ export const EditProfileTask = async (req: Request, res: Response) => {
       res.send(respObject);
     } else {
       profile = await Profile.findOneAndUpdate(
-        { _id: req.user.id },
+        { authId: req.user.id },
         { $set: newProfile },
         { new: true }
       );
-      let respObject = new ResponseObj(
-        200,
-        newProfile,
-        "Profile Update Success"
-      );
+      let respObject = new ResponseObj(200, profile, "Profile Update Success");
       return res.status(200).send(respObject);
     }
   } catch (error) {
