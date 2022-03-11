@@ -49,12 +49,14 @@ export const uploadTask = async (req: Request, res: Response) => {
             width: result.width,
             height: result.height,
           },
+          {},
           "Profile Image upload Success"
         );
         return res.status(200).send(respObject);
       } else {
         let respObject = new ResponseObj(
           400,
+          {},
           {},
           "Error Occured while uploading."
         );
@@ -72,10 +74,10 @@ export const deleteImg = async (req: Request, res: Response) => {
 
   cloudinary.v2.uploader.destroy(publicid, async (result: any, error: any) => {
     if (result) {
-      let respObject = new ResponseObj(200, result, "Image Deleted");
+      let respObject = new ResponseObj(200, result, {}, "Image Deleted");
       return res.status(200).send(respObject);
     } else {
-      let respObject = new ResponseObj(400, error, "Image Delete Failed");
+      let respObject = new ResponseObj(400, error, {}, "Image Delete Failed");
       return res.status(400).send(respObject);
     }
   });

@@ -20,7 +20,12 @@ export const CreateProfileTask = async (req: Request, res: Response) => {
   //Checking the validetion error
   let errors = validationResult(req);
   if (!errors.isEmpty()) {
-    let respObject = new ResponseObj(400, errors, "Validation error occured");
+    let respObject = new ResponseObj(
+      400,
+      errors,
+      {},
+      "Validation error occured"
+    );
     return res.status(400).send(respObject);
   }
   try {
@@ -36,13 +41,14 @@ export const CreateProfileTask = async (req: Request, res: Response) => {
     let respObject = new ResponseObj(
       200,
       newprofile,
+      {},
       "Profile added successfully"
     );
     return res.status(200).send(respObject);
   } catch (error) {
     let errorObject: object = {};
     if (error instanceof Error) errorObject = error;
-    let resData = new ResponseObj(400, errorObject, "Profile save failed");
+    let resData = new ResponseObj(400, errorObject, {}, "Profile save failed");
     return res.send(resData);
   }
 };
@@ -79,7 +85,7 @@ export const EditProfileTask = async (req: Request, res: Response) => {
   try {
     let findUser = await Auth.findById(req.user.id);
     if (!findUser) {
-      let respObject = new ResponseObj(400, newProfile, "User not found");
+      let respObject = new ResponseObj(400, newProfile, {}, "User not found");
       res.send(respObject);
     } else {
       profile = await Profile.findOneAndUpdate(
@@ -87,13 +93,18 @@ export const EditProfileTask = async (req: Request, res: Response) => {
         { $set: newProfile },
         { new: true }
       );
-      let respObject = new ResponseObj(200, profile, "Profile Update Success");
+      let respObject = new ResponseObj(
+        200,
+        profile,
+        {},
+        "Profile Update Success"
+      );
       return res.status(200).send(respObject);
     }
   } catch (error) {
     let errorObject: object = {};
     if (error instanceof Error) errorObject = error;
-    let resData = new ResponseObj(400, errorObject, "Profile Update Error");
+    let resData = new ResponseObj(400, errorObject, {}, "Profile Update Error");
     return res.send(resData);
   }
 };
@@ -105,11 +116,11 @@ export const GetProfile = async (req: Request, res: Response) => {
   //finding if profile exist
   let profile = await Profile.findOne({ authId: req.user.id });
   if (!profile) {
-    let respObject = new ResponseObj(404, {}, "Profile not found");
+    let respObject = new ResponseObj(404, {}, {}, "Profile not found");
     return res.status(404).send(respObject);
   }
 
-  let respObject = new ResponseObj(200, profile, "Profile found");
+  let respObject = new ResponseObj(200, profile, {}, "Profile found");
   return res.status(200).send(respObject);
 };
 
@@ -160,18 +171,25 @@ export const UploadDP = async (req: Request, res: Response) => {
             let respObject = new ResponseObj(
               200,
               imageObjects,
+              {},
               "DP Added Successfully"
             );
             return res.status(200).send(respObject);
           } catch (error) {
             let errorObject: object = {};
             if (error instanceof Error) errorObject = error;
-            let resData = new ResponseObj(400, errorObject, "Dp Adding Error");
+            let resData = new ResponseObj(
+              400,
+              errorObject,
+              {},
+              "Dp Adding Error"
+            );
             return res.status(400).send(resData);
           }
         } else {
           let respObject = new ResponseObj(
             400,
+            {},
             {},
             "Error Occured while uploading."
           );
@@ -219,6 +237,7 @@ export const UploadDP = async (req: Request, res: Response) => {
                     let respObject = new ResponseObj(
                       200,
                       imageObjects,
+                      {},
                       "DP Update Success"
                     );
                     return res.status(200).send(respObject);
@@ -228,6 +247,7 @@ export const UploadDP = async (req: Request, res: Response) => {
                     let resData = new ResponseObj(
                       400,
                       errorObject,
+                      {},
                       "Profile Update Error"
                     );
                     return res.send(resData);
@@ -236,6 +256,7 @@ export const UploadDP = async (req: Request, res: Response) => {
                   let respObject = new ResponseObj(
                     400,
                     {},
+                    {},
                     "Error Occured while uploading."
                   );
                   return res.status(400).send(respObject);
@@ -243,7 +264,12 @@ export const UploadDP = async (req: Request, res: Response) => {
               }
             );
           } else {
-            let respObject = new ResponseObj(400, error, "Image Delete Failed");
+            let respObject = new ResponseObj(
+              400,
+              error,
+              {},
+              "Image Delete Failed"
+            );
             return res.status(400).send(respObject);
           }
         }
@@ -251,7 +277,7 @@ export const UploadDP = async (req: Request, res: Response) => {
     } else {
       //Checking files is send or not
       if (!imagedata) {
-        let respObject = new ResponseObj(405, {}, "PLease send Image");
+        let respObject = new ResponseObj(405, {}, {}, "PLease send Image");
         return res.status(405).send(respObject);
       }
 
@@ -285,6 +311,7 @@ export const UploadDP = async (req: Request, res: Response) => {
               let respObject = new ResponseObj(
                 200,
                 imageObjects,
+                {},
                 "DP Update Success"
               );
               return res.status(200).send(respObject);
@@ -294,6 +321,7 @@ export const UploadDP = async (req: Request, res: Response) => {
               let resData = new ResponseObj(
                 400,
                 errorObject,
+                {},
                 "Profile Update Error"
               );
               return res.send(resData);
@@ -301,6 +329,7 @@ export const UploadDP = async (req: Request, res: Response) => {
           } else {
             let respObject = new ResponseObj(
               400,
+              {},
               {},
               "Error Occured while uploading."
             );

@@ -17,7 +17,12 @@ export const RegisterTask = async (req: Request, res: Response) => {
   //Checking validations
   let errors = validationResult(req);
   if (!errors.isEmpty()) {
-    let respObject = new ResponseObj(400, errors, "Validations error occured");
+    let respObject = new ResponseObj(
+      400,
+      errors,
+      {},
+      "Validations error occured"
+    );
     return res.status(400).send(respObject);
   }
 
@@ -26,7 +31,7 @@ export const RegisterTask = async (req: Request, res: Response) => {
    */
   let found = await Auth.findOne({ email });
   if (found) {
-    let resData = new ResponseObj(409, {}, "Email already Taken");
+    let resData = new ResponseObj(409, {}, {}, "Email already Taken");
     return res.status(409).send(resData);
   }
 
@@ -54,13 +59,18 @@ export const RegisterTask = async (req: Request, res: Response) => {
    */
   try {
     await newUser.save();
-    let resData = new ResponseObj(200, newUser, "Confirm link is sent to mail");
+    let resData = new ResponseObj(
+      200,
+      newUser,
+      {},
+      "Confirm link is sent to mail"
+    );
     //SendActivationMail(newUser._id, token, newUser.email);
     return res.send(resData);
   } catch (error) {
     let errorObject: object = {};
     if (error instanceof Error) errorObject = error;
-    let resData = new ResponseObj(400, errorObject, "User save failed");
+    let resData = new ResponseObj(400, errorObject, {}, "User save failed");
 
     return res.send(resData);
   }
@@ -103,6 +113,7 @@ export const ActivateTask = async (req: Request, res: Response) => {
     let respObject = new ResponseObj(
       401,
       {},
+      {},
       "Sorry, but the code is not valid"
     );
     return res.status(401).send(respObject);
@@ -116,6 +127,7 @@ export const ActivateTask = async (req: Request, res: Response) => {
     if (!findUser) {
       let responseObj = new ResponseObj(
         404,
+        {},
         {},
         "Sorry, The user was not found. Please chefck again."
       );
@@ -131,13 +143,14 @@ export const ActivateTask = async (req: Request, res: Response) => {
     let respObject = new ResponseObj(
       200,
       {},
+      {},
       "Congrats, your account is now activated. Now you can log in."
     );
     return res.status(200).send(respObject);
   } catch (error) {
     let errorObject: object = {};
     if (error instanceof Error) errorObject = error;
-    let responseObj = new ResponseObj(500, errorObject, "Server Error");
+    let responseObj = new ResponseObj(500, errorObject, {}, "Server Error");
     return res.status(500).send(responseObj);
   }
 };
@@ -150,7 +163,12 @@ export const LoginTask = async (req: Request, res: Response) => {
   //Checking validations
   let errors = validationResult(req);
   if (!errors.isEmpty()) {
-    let respObject = new ResponseObj(400, errors, "Validations error occured");
+    let respObject = new ResponseObj(
+      400,
+      errors,
+      {},
+      "Validations error occured"
+    );
     return res.status(400).send(respObject);
   }
 
@@ -165,6 +183,7 @@ export const LoginTask = async (req: Request, res: Response) => {
       let responseObj = new ResponseObj(
         404,
         {},
+        {},
         "Sorry, The user was not found. Please check again."
       );
       return res.status(404).send(responseObj);
@@ -175,6 +194,7 @@ export const LoginTask = async (req: Request, res: Response) => {
       let responsObj = new ResponseObj(
         405,
         findUser,
+        {},
         "Your account is not activated"
       );
       return res.status(405).send(responsObj);
@@ -185,6 +205,7 @@ export const LoginTask = async (req: Request, res: Response) => {
     if (!isMatch) {
       let responsObj = new ResponseObj(
         401,
+        {},
         {},
         "Sorry, Password did not matched. Please try again."
       );
@@ -208,12 +229,12 @@ export const LoginTask = async (req: Request, res: Response) => {
       access_token: access_token,
       user: userData,
     };
-    let respObject = new ResponseObj(200, resData, "Login Successfull");
+    let respObject = new ResponseObj(200, resData, {}, "Login Successfull");
     return res.status(200).send(respObject);
   } catch (error) {
     let errorObject: object = {};
     if (error instanceof Error) errorObject = error;
-    let responseObj = new ResponseObj(500, errorObject, "Server Error");
+    let responseObj = new ResponseObj(500, errorObject, {}, "Server Error");
     return res.status(500).send(responseObj);
   }
 };
