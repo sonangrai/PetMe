@@ -1,12 +1,12 @@
 import { Router } from "express";
+import { getFeedTask } from "../controller/Feed";
+import auth from "../middleware/auth";
 
 const router = Router();
 
 /**
  *
  */
-router.get("/", async (req, res) => {
-  res.send("All posts");
-});
+router.get("/", auth, getFeedTask);
 
 export default router;
