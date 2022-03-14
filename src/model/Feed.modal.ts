@@ -5,7 +5,15 @@ interface Ilike {
   userId: [];
 }
 
+interface Imedia {
+  url: string;
+  secure_url: string;
+  width: number;
+  height: number;
+}
+
 export interface Ifeed extends mongoose.Document {
+  media: Imedia[];
   description: string;
   userId: string;
   type: string;
@@ -14,6 +22,9 @@ export interface Ifeed extends mongoose.Document {
 
 const FeedSchema = new mongoose.Schema(
   {
+    media: {
+      type: Array,
+    },
     description: {
       type: String,
     },
