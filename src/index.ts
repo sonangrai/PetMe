@@ -1,11 +1,15 @@
 import express from "express"; //Importing the express
-import path from "path/posix";
 import http from "http";
 import { Server } from "socket.io";
 import connectDb from "./db/Dbconnect";
 import routes from "./routes";
 import cors from "cors";
+import { graphqlHTTP } from "express-graphql";
 require("dotenv").config(); //The dotenv for env usage
+
+import schema from "./schema/Feed";
+import resolvers from "./resolvers";
+import { feedQueries } from "./resolvers/feed";
 
 /**
  * The app instance
@@ -55,13 +59,16 @@ app.use("/api", routes);
 connectDb();
 
 /**
- * Serving frontend
+ * Graphql
  */
-// Set static folder
-app.use(express.static("frontend/build"));
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
-});
+app.use(
+  "/graphql",
+  graphqlHTTP({
+    schema: schema,
+    rootValue: feedQueries,
+    graphiql: true,
+  })
+);
 
 /**
  * Making the app listen
