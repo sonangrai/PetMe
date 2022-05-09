@@ -6,6 +6,7 @@ interface Ilike {
 }
 
 interface Imedia {
+  public_id: string;
   url: string;
   secure_url: string;
   width: number;
@@ -22,6 +23,9 @@ export interface Ifeed extends mongoose.Document {
 
 const FeedSchema = new mongoose.Schema(
   {
+    public_id: {
+      type: String,
+    },
     media: {
       type: Array,
     },
