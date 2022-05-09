@@ -33,7 +33,7 @@ const FeedSchema = new mongoose.Schema(
       ref: "auth",
     },
     type: {
-      type: String,
+      type: Number,
     },
     like: {
       type: [],
