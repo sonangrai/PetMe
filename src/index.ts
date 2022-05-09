@@ -3,7 +3,7 @@ import path from "path/posix";
 import http from "http";
 import { Server } from "socket.io";
 import connectDb from "./db/Dbconnect";
-import routes from "./routes";
+import routes from "./v1/routes";
 import cors from "cors";
 require("dotenv").config(); //The dotenv for env usage
 
@@ -47,7 +47,7 @@ let PORT = process.env.PORT || 4001;
 /**
  * Routes
  */
-app.use("/api", routes);
+app.use("/api/v1", routes);
 
 /**
  * Connecting to mongo DB
