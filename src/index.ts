@@ -1,5 +1,4 @@
 import express from "express"; //Importing the express
-import path from "path/posix";
 import http from "http";
 import { Server } from "socket.io";
 import connectDb from "./db/Dbconnect";
@@ -53,15 +52,6 @@ app.use("/api/v1", routes);
  * Connecting to mongo DB
  */
 connectDb();
-
-/**
- * Serving frontend
- */
-// Set static folder
-app.use(express.static("frontend/build"));
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
-});
 
 /**
  * Making the app listen
