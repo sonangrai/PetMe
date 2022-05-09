@@ -16,8 +16,8 @@ export interface Ifeed extends mongoose.Document {
   media: Imedia[];
   description: string;
   userId: string;
-  type: string;
-  like: Ilike;
+  type: number;
+  like: Ilike[];
 }
 
 const FeedSchema = new mongoose.Schema(
@@ -36,7 +36,7 @@ const FeedSchema = new mongoose.Schema(
       type: String,
     },
     like: {
-      type: Object,
+      type: [],
     },
   },
   { timestamps: true }
