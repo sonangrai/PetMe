@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getFeedTask, postFeedTask } from "../controller/Feed";
+import { getFeedTask, postDeleteTask, postFeedTask } from "../controller/Feed";
 import auth from "../middleware/auth";
 import multipart from "connect-multiparty";
 
@@ -16,5 +16,10 @@ router.get("/", auth, getFeedTask);
  *Post new feed
  */
 router.post("/", multipartMiddleware, postFeedTask);
+
+/**
+ * Delete Post
+ */
+router.delete("/:fid", postDeleteTask);
 
 export default router;

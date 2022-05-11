@@ -95,3 +95,45 @@ export const postFeedTask = async (req: Request, res: Response) => {
     return res.send(resData);
   }
 };
+
+/**
+ *
+ * @param req
+ * @param res
+ */
+export const postDeleteTask = async (req: Request, res: Response) => {
+  try {
+    //First getting post information to check the existance
+    const postObject = await Feed.findById(req.params.fid);
+    //Deleting the image from cloudinary before deleting the post
+
+    //Uploading all the media images to cloudinary
+    let multiplePicturePromise = postObject.media.map(
+      (element) =>
+        new Promise((resolve, reject) => {
+          //Uploading to Cloudinary
+          cloudinary.v2.uploader.destroy(
+            element.public_id,
+            function (error, result) {
+              if (error) {
+                reject(error);
+              } else {
+                resolve("Image deleted");
+              }
+            }
+          );
+        })
+    );
+    let imageResponses = await Promise.all(multiplePicturePromise);
+
+    await Feed.deleteOne({ _id: req.params.fid });
+
+    let respObject = new ResponseObj(
+      200,
+      { imageResponses },
+      {},
+      "Post deleted successfully"
+    );
+    return res.status(200).send(respObject);
+  } catch (error) {}
+};
