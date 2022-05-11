@@ -26,7 +26,12 @@ export const getFeedTask = async (req: Request, res: Response) => {
       return res.status(200).send(responseObj);
     }
     return res.send(feeds);
-  } catch (error) {}
+  } catch (error) {
+    let errorObject: object = {};
+    if (error instanceof Error) errorObject = error;
+    let resData = new ResponseObj(500, errorObject, {}, "Something went wrong");
+    return res.send(resData);
+  }
 };
 
 /**
@@ -105,9 +110,12 @@ export const postDeleteTask = async (req: Request, res: Response) => {
   try {
     //First getting post information to check the existance
     const postObject = await Feed.findById(req.params.fid);
-    //Deleting the image from cloudinary before deleting the post
+    if (!postObject) {
+      let respObject = new ResponseObj(404, {}, {}, "Post not found");
+      return res.status(404).send(respObject);
+    }
 
-    //Uploading all the media images to cloudinary
+    //Deleting the image from cloudinary before deleting the post
     let multiplePicturePromise = postObject.media.map(
       (element) =>
         new Promise((resolve, reject) => {
@@ -135,5 +143,10 @@ export const postDeleteTask = async (req: Request, res: Response) => {
       "Post deleted successfully"
     );
     return res.status(200).send(respObject);
-  } catch (error) {}
+  } catch (error) {
+    let errorObject: object = {};
+    if (error instanceof Error) errorObject = error;
+    let resData = new ResponseObj(500, errorObject, {}, "Post delete failed");
+    return res.send(resData);
+  }
 };
