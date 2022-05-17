@@ -10,7 +10,7 @@
     "dev": "concurrently \"npm run server:dev\" \"npm run client\"",
     "server:dev": "nodemon src/index.ts",
     "build": "rimraf dist && tsc --project ./",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run build && npm install --prefix frontend && npm run build --prefix frontend"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run build"
   },
   "keywords": [
     "pet"
