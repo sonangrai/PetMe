@@ -19,7 +19,7 @@ const CommentSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "feed",
     },
-    userId: {
+    commentorId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "auth",
     },
@@ -28,7 +28,7 @@ const CommentSchema = new mongoose.Schema(
     },
     replyTo: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "auth",
+      ref: "comment",
     },
     like: {
       type: Object,
