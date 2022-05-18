@@ -39,6 +39,9 @@ const FeedSchema = new mongoose.Schema(
     type: {
       type: Number,
     },
+    commentCount: {
+      type: Number,
+    },
     like: {
       type: [],
     },
