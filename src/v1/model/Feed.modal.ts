@@ -18,6 +18,7 @@ export interface Ifeed extends mongoose.Document {
   description: string;
   userId: string;
   type: number;
+  commentCount: number;
   like: Ilike[];
 }
 
