@@ -31,7 +31,7 @@ const CommentSchema = new mongoose.Schema(
       ref: "comment",
     },
     like: {
-      type: Object,
+      type: Array,
     },
   },
   { timestamps: true }
