@@ -1,6 +1,7 @@
 import Comment from "../model/Comment.modal";
 import { Response, Request } from "express";
 import ResponseObj from "./Response";
+import Feed from "../model/Feed.modal";
 
 /**
  * Post New Comment
@@ -18,6 +19,18 @@ export const postCommentTask = async (req: Request, res: Response) => {
     });
     await newComment.save();
 
+    //Updating the comment count in the post
+    let feed = await Feed.findById(feedId);
+
+    if (!feed.commentCount) {
+      await Feed.findOneAndUpdate({ _id: feedId }, { commentCount: 1 });
+    } else {
+      await Feed.findOneAndUpdate(
+        { _id: feedId },
+        { $inc: { commentCount: 1 } }
+      );
+    }
+
     let respObject = new ResponseObj(
       200,
       newComment,
@@ -28,7 +41,7 @@ export const postCommentTask = async (req: Request, res: Response) => {
   } catch (error) {
     let errorObject: object = {};
     if (error instanceof Error) errorObject = error;
-    let resData = new ResponseObj(400, errorObject, {}, "Post save failed");
+    let resData = new ResponseObj(400, errorObject, {}, "Comment save failed");
     return res.send(resData);
   }
 };
