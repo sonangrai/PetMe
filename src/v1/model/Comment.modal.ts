@@ -23,7 +23,7 @@ const CommentSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "auth",
     },
-    comment: {
+    commentText: {
       type: String,
     },
     replyTo: {
@@ -37,4 +37,4 @@ const CommentSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model<Icomment>("Feed", CommentSchema);
+export default mongoose.model<Icomment>("Comment", CommentSchema);
