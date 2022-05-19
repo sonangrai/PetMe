@@ -58,7 +58,7 @@ export const deleteCommentTask = async (req: Request, res: Response) => {
 
     await Feed.findOneAndUpdate(
       { _id: req.params.fId },
-      { $dec: { commentCount: 1 } }
+      { $inc: { commentCount: -1 } }
     );
 
     await Comment.deleteOne({ _id: req.params.cId }); //Delete the commment

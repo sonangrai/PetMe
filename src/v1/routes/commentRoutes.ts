@@ -12,6 +12,6 @@ router.post("/", postCommentTask);
 /**
  * Delete comment
  */
-router.delete("/:pId/:cId", deleteCommentTask);
+router.delete("/:fId/:cId", deleteCommentTask);
 
 export default router;
