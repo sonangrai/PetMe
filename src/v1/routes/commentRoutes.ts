@@ -1,12 +1,17 @@
 import { Router } from "express";
-import { postCommentTask } from "../controller/Comment";
+import { deleteCommentTask, postCommentTask } from "../controller/Comment";
 import auth from "../middleware/auth";
 
 let router = Router();
 
 /**
- * Upload images
+ * Post Comment
  */
 router.post("/", postCommentTask);
+
+/**
+ * Delete comment
+ */
+router.delete("/:pId/:cId", deleteCommentTask);
 
 export default router;

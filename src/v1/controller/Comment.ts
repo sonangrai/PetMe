@@ -46,6 +46,12 @@ export const postCommentTask = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * Delete Comment
+ * @param req
+ * @param res
+ * @returns
+ */
 export const deleteCommentTask = async (req: Request, res: Response) => {
   try {
     //Updating the comment count in the post
