@@ -20,8 +20,8 @@ export interface IProfile extends mongoose.Document {
   address: string;
   contact: string;
   hidenumber: string;
-  followers: [];
-  following: [];
+  followers: any[];
+  following: any[];
 }
 
 const ProfileSchema = new mongoose.Schema(
