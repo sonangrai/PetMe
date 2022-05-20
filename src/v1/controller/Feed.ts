@@ -25,7 +25,9 @@ export const getFeedTask = async (req: Request, res: Response) => {
       const responseObj = new ResponseObj(200, {}, paginate, "No Data");
       return res.status(200).send(responseObj);
     }
-    return res.send(feeds);
+    const paginate = new respPagination(0, 0, 0);
+    const responseObj = new ResponseObj(200, feeds, paginate, "Data");
+    return res.status(200).send(responseObj);
   } catch (error) {
     let errorObject: object = {};
     if (error instanceof Error) errorObject = error;
