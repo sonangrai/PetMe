@@ -13,12 +13,9 @@
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run build"
   },
   "keywords": [
-    "pet"
+    "pet",
+    "petgram"
   ],
-  "engines": {
-    "node": "16.13.0",
-    "npm": "8.1.0"
-  },
   "author": "sonahang rai",
   "license": "MIT",
   "dependencies": {

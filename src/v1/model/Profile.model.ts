@@ -3,6 +3,10 @@ import mongoose from "mongoose";
 /**
  * A model for the user profile
  */
+interface Ifollow {
+  count: number;
+  userId: [];
+}
 export interface IProfile extends mongoose.Document {
   authId: string;
   firstname: string;
@@ -20,8 +24,6 @@ export interface IProfile extends mongoose.Document {
   address: string;
   contact: string;
   hidenumber: string;
-  followers: any[];
-  following: any[];
 }
 
 const ProfileSchema = new mongoose.Schema(
@@ -57,12 +59,6 @@ const ProfileSchema = new mongoose.Schema(
     hidenumber: {
       type: String,
       default: 0, // 0 for hide & 1 for show
-    },
-    followers: {
-      type: Array,
-    },
-    following: {
-      type: Array,
     },
   },
   { timestamps: true }

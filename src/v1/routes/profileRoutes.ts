@@ -3,7 +3,6 @@ import { check } from "express-validator";
 import {
   CreateProfileTask,
   EditProfileTask,
-  followProfileTask,
   GetProfile,
   UploadDP,
 } from "../controller/Profile";
@@ -55,10 +54,5 @@ router.get("/", auth, GetProfile);
  * Upload DP
  */
 router.post("/dp", [auth, multipartMiddleware], UploadDP);
-
-/**
- * Follow user
- */
-router.post("/follow/:uId/:id", auth, followProfileTask);
 
 export default router;
