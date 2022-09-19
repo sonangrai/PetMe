@@ -10,7 +10,7 @@
     "dev": "concurrently \"npm run server:dev\" \"npm run client\"",
     "server:dev": "nodemon src/index.ts",
     "build": "rimraf dist && tsc --project ./",
-    "rimraf": "./node_modules/rimraf/bin.js"
+    "build:render": "yarn; rimraf dist && tsc --project ./"
   },
   "keywords": [
     "pet",
