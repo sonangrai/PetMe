@@ -3,10 +3,6 @@ import mongoose from "mongoose";
 /**
  * A model for the user profile
  */
-interface Ifollow {
-  count: number;
-  userId: [];
-}
 export interface IProfile extends mongoose.Document {
   authId: string;
   firstname: string;
