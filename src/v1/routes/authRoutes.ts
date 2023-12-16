@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { ActivateTask, LoginTask, RegisterTask } from "../controller/Auth";
+import { ActivateAccount, LoginUser, RegisterUser } from "../controller/auth";
 import { check } from "express-validator";
 
 const router = Router();
@@ -16,7 +16,7 @@ router.post(
       min: 6,
     }),
   ],
-  RegisterTask
+  RegisterUser
 );
 
 /**
@@ -28,12 +28,12 @@ router.post(
     check("logtype", "This cannot be empty").notEmpty(),
     check("password", "This cannot be empty").notEmpty(),
   ],
-  LoginTask
+  LoginUser
 );
 
 /**
  * Activate account route
  */
-router.post("/activate", ActivateTask);
+router.post("/activate", ActivateAccount);
 
 export default router;
