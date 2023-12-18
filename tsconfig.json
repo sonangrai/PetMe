@@ -1,18 +1,17 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
     "types": ["node"],
     "target": "es6",
-    "module": "commonjs",
+    "module": "CommonJS",
     "rootDir": "./src",
     "outDir": "./dist",
+    "moduleResolution": "node",
     "esModuleInterop": true,
     "strict": false
   },
   "include": ["src"],
   "exclude": ["node_modules"],
   "ts-node": {
-    "swc": true,
-    "require": ["tsconfig-paths/register"]
+    "swc": true
   }
 }

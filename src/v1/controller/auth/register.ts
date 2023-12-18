@@ -1,9 +1,9 @@
-import Auth from "v1/model/Auth.model";
-import ResponseObj from "../Response";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import { validationResult } from "express-validator";
 import { Request, Response } from "express";
+import { validationResult } from "express-validator";
+import jwt from "jsonwebtoken";
+import Auth from "../../model/Auth.model";
+import ResponseObj from "../Response";
 
 /**
  * This task is for registering a new user

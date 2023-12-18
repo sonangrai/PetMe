@@ -12,8 +12,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const Auth_model_1 = __importDefault(require("../../model/Auth.model"));
 const Response_1 = __importDefault(require("../Response"));
-const Auth_model_1 = __importDefault(require("v1/model/Auth.model"));
 /**
  * The activate account task
  */
