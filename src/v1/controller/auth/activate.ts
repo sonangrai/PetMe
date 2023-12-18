@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import ResponseObj from "../Response";
-import Auth from "../../model/Auth.model";
+import Auth from "v1/model/Auth.model";
 
 /**
  * The activate account task

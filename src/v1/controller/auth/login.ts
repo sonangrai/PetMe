@@ -1,4 +1,4 @@
-import Auth from "../../model/Auth.model";
+import Auth from "v1/model/Auth.model";
 import ResponseObj from "../Response";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
