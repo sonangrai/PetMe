@@ -1,9 +1,9 @@
 import { Router } from "express";
 import authRoutes from "./authRoutes";
-import profileRoutes from "./profileRoutes";
 import bucketRoutes from "./bucketRoutes";
-import feedRoutes from "./feedRoutes";
 import commentRoutes from "./commentRoutes";
+import feedRoutes from "./feedRoutes";
+import profileRoutes from "./profileRoutes";
 
 const router = Router();
 
