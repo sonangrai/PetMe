@@ -1,9 +1,9 @@
+import cors from "cors";
 import express from "express"; //Importing the express
 import http from "http";
 import { Server } from "socket.io";
 import connectDb from "./db/Dbconnect";
 import routes from "./v1/routes";
-import cors from "cors";
 require("dotenv").config(); //The dotenv for env usage
 
 /**

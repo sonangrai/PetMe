@@ -1,0 +1,6 @@
+{
+  "extends": ["@typescript-eslint/parser", "prettier"],
+  "rules": {
+    "no-console": "error"
+  }
+}
