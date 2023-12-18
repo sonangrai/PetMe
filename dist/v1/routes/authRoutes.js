@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const Auth_1 = require("../controller/Auth");
+const auth_1 = require("../controller/auth");
 const express_validator_1 = require("express-validator");
 const router = (0, express_1.Router)();
 /**
@@ -13,16 +13,16 @@ router.post("/", [
     (0, express_validator_1.check)("password", "Password must be more than 6 character").isLength({
         min: 6,
     }),
-], Auth_1.RegisterTask);
+], auth_1.RegisterUser);
 /**
  * Login route
  */
 router.post("/login", [
     (0, express_validator_1.check)("logtype", "This cannot be empty").notEmpty(),
     (0, express_validator_1.check)("password", "This cannot be empty").notEmpty(),
-], Auth_1.LoginTask);
+], auth_1.LoginUser);
 /**
  * Activate account route
  */
-router.post("/activate", Auth_1.ActivateTask);
+router.post("/activate", auth_1.ActivateAccount);
 exports.default = router;

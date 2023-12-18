@@ -5,10 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const authRoutes_1 = __importDefault(require("./authRoutes"));
-const profileRoutes_1 = __importDefault(require("./profileRoutes"));
 const bucketRoutes_1 = __importDefault(require("./bucketRoutes"));
-const feedRoutes_1 = __importDefault(require("./feedRoutes"));
 const commentRoutes_1 = __importDefault(require("./commentRoutes"));
+const feedRoutes_1 = __importDefault(require("./feedRoutes"));
+const profileRoutes_1 = __importDefault(require("./profileRoutes"));
 const router = (0, express_1.Router)();
 /**
  * Authentication routes
