@@ -29,7 +29,7 @@ const ActivateAccount = async (req: Request, res: Response) => {
         404,
         {},
         {},
-        "Sorry, The user was not found. Please chefck again."
+        "Sorry, The user was not found. Please check again and try."
       );
       return res.status(404).send(responseObj);
     }

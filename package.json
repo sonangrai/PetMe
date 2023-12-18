@@ -1,14 +1,12 @@
 {
-  "name": "petme",
+  "name": "petgram",
   "version": "1.0.0",
-  "description": "A pet social site and also an ecommerce for cuties.",
+  "description": "A pet social site and also an e-commerce for cuties.",
   "main": "src/index.js",
   "scripts": {
     "start": "node dist",
-    "client": "npm start --prefix frontend",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently \"npm run server:dev\" \"npm run client\"",
-    "server:dev": "nodemon src/index.ts",
+    "dev": "nodemon src/index.ts",
     "build": "rimraf dist && tsc --project ./",
     "build:render": "yarn; rimraf dist && tsc --project ./"
   },
@@ -38,7 +36,6 @@
     "@types/mongoose": "^5.11.97",
     "@types/node": "^20.10.4",
     "@types/nodemailer": "^6.4.14",
-    "concurrently": "^8.2.2",
     "nodemon": "^3.0.2",
     "rimraf": "^5.0.5",
     "ts-node": "^10.9.2",

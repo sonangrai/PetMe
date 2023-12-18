@@ -9,7 +9,7 @@ import { Request, Response } from "express";
  * The login task
  */
 const LoginUser = async (req: Request, res: Response) => {
-  const { logtype, password } = req.body;
+  const { authType, password } = req.body;
   //Checking validations
   let errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -27,8 +27,8 @@ const LoginUser = async (req: Request, res: Response) => {
    */
   try {
     let findUser =
-      (await Auth.findOne({ username: logtype })) ||
-      (await Auth.findOne({ email: logtype }));
+      (await Auth.findOne({ username: authType })) ||
+      (await Auth.findOne({ email: authType }));
     if (!findUser) {
       let responseObj = new ResponseObj(
         404,
@@ -41,25 +41,25 @@ const LoginUser = async (req: Request, res: Response) => {
 
     //Checking if the account is activated
     if (findUser.status != "1") {
-      let responsObj = new ResponseObj(
+      let responseObj = new ResponseObj(
         405,
         findUser,
         {},
         "Your account is not activated"
       );
-      return res.status(405).send(responsObj);
+      return res.status(405).send(responseObj);
     }
 
     //Finally checking the password
     const isMatch = await bcrypt.compare(password, findUser.password);
     if (!isMatch) {
-      let responsObj = new ResponseObj(
+      let responseObj = new ResponseObj(
         401,
         {},
         {},
         "Sorry, Password did not matched. Please try again."
       );
-      return res.status(401).send(responsObj);
+      return res.status(401).send(responseObj);
     }
 
     let access_token = jwt.sign(
@@ -79,7 +79,7 @@ const LoginUser = async (req: Request, res: Response) => {
       access_token: access_token,
       user: userData,
     };
-    let respObject = new ResponseObj(200, resData, {}, "Login Successfull");
+    let respObject = new ResponseObj(200, resData, {}, "Login Success");
     return res.status(200).send(respObject);
   } catch (error) {
     let errorObject: object = {};
