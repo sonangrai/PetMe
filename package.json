@@ -7,12 +7,18 @@
     "start": "node dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/index.ts",
-    "build": "rimraf dist && tsc --project ./",
-    "build:render": "yarn; rimraf dist && tsc --project ./"
+    "ts.check": "tsc --project tsconfig.json",
+    "add-build": "git add dist",
+    "build": "rimraf dist && tsc --project ./"
   },
   "keywords": [
     "pet",
     "petgram"
+  ],
+  "pre-commit": [
+    "ts.check",
+    "build",
+    "add-build"
   ],
   "author": "sonahang rai",
   "license": "MIT",
@@ -39,6 +45,7 @@
     "@types/node": "^20.10.4",
     "@types/nodemailer": "^6.4.14",
     "nodemon": "^3.0.2",
+    "pre-commit": "^1.2.2",
     "prettier": "^3.1.1",
     "prettier-plugin-organize-imports": "^3.2.4",
     "regenerator-runtime": "^0.14.1",
