@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A pet social site and also an e-commerce for cuties.",
   "main": "src/index.js",
+  "repository": "https://github.com/sonangrai/Petgram.git",
   "scripts": {
     "start": "node dist",
     "test": "echo \"Error: no test specified\" && exit 1",
