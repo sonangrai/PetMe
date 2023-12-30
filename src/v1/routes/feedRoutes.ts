@@ -1,12 +1,12 @@
+import multipart from "connect-multiparty";
 import { Router } from "express";
 import {
-  addLikeTask,
+  deleteFeedTask,
   getFeedTask,
-  postDeleteTask,
+  likeFeedTask,
   postFeedTask,
-} from "../controller/Feed";
+} from "../controller/feed";
 import auth from "../middleware/auth";
-import multipart from "connect-multiparty";
 
 let multipartMiddleware = multipart();
 
@@ -25,11 +25,11 @@ router.post("/", multipartMiddleware, postFeedTask);
 /**
  * Delete Post
  */
-router.delete("/:fid", postDeleteTask);
+router.delete("/:fid", auth, deleteFeedTask);
 
 /**
  * Add Like to a Feed
  */
-router.post("/like/:fId", auth, addLikeTask);
+router.post("/like/:fId", auth, likeFeedTask);
 
 export default router;
