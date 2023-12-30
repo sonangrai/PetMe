@@ -4,6 +4,7 @@
   "description": "A pet social site and also an e-commerce for cuties.",
   "main": "src/index.js",
   "repository": "https://github.com/sonangrai/Petgram.git",
+  "author": "sonangrai <shonahangrae@gmail.com>",
   "scripts": {
     "start": "node dist",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -21,7 +22,6 @@
     "build",
     "add-build"
   ],
-  "author": "sonahang rai",
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
