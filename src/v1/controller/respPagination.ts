@@ -2,7 +2,7 @@
  * Class for pagination response
  * page : current page number
  * pageSize : total item in one page
- * totoalItem : total items
+ * totalItem : total items
  */
 class respPagination {
   page: number;

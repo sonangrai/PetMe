@@ -1,6 +1,5 @@
 import { Router } from "express";
-import { deleteCommentTask, postCommentTask } from "../controller/Comment";
-import auth from "../middleware/auth";
+import { deleteCommentTask, postCommentTask } from "../controller/comment";
 
 let router = Router();
 
