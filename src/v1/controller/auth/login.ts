@@ -26,9 +26,10 @@ const LoginUser = async (req: Request, res: Response) => {
    * Finding the user
    */
   try {
-    let findUser =
-      (await Auth.findOne({ username: authType })) ||
-      (await Auth.findOne({ email: authType }));
+    let findUser = await Auth.findOne({
+      $or: [{ email: authType }, { username: authType }],
+    });
+
     if (!findUser) {
       let responseObj = new ResponseObj(
         404,

@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { ActivateAccount, LoginUser, RegisterUser } from "../controller/auth";
 import { check } from "express-validator";
+import { ActivateAccount, LoginUser, RegisterUser } from "../controller/auth";
 
 const router = Router();
 
@@ -25,7 +25,7 @@ router.post(
 router.post(
   "/login",
   [
-    check("logtype", "This cannot be empty").notEmpty(),
+    check("authType", "This cannot be empty").notEmpty(),
     check("password", "This cannot be empty").notEmpty(),
   ],
   LoginUser
