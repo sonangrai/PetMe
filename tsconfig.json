@@ -4,7 +4,7 @@
     "target": "es6",
     "module": "CommonJS",
     "rootDir": "./src",
-    "outDir": "./public/dist",
+    "outDir": "dist",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "strict": false
