@@ -11,7 +11,7 @@
     "dev": "nodemon src/index.ts",
     "ts.check": "tsc --project tsconfig.json",
     "add-build": "git add dist",
-    "build": "rimraf ./public/dist && tsc --project ./"
+    "build": "rimraf dist && tsc --project ./"
   },
   "pre-commit": [
     "ts.check",
